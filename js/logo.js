@@ -156,6 +156,8 @@ function Logo () {
     this.lastNotePlayed = {};
     this.noteStatus = {};
 
+    this.overrides = {};
+
     this.pitchNumberOffset = 39;  // C4
 
     // status of note being played
@@ -928,6 +930,7 @@ function Logo () {
             this.noteValuePerBeat[turtle] = 4;
             this.currentBeat[turtle] = 0;
             this.currentMeasure[turtle] = 0;
+            this.overrides[turtle] = {};
         }
 
         this.pitchNumberOffset = 39;  // C4
@@ -3998,6 +4001,18 @@ function Logo () {
 
             that._setListener(turtle, listenerName, __listener);
             break;
+        case 'overridedrum':
+            var drumname = 'kick';
+            for (var drum in DRUMNAMES) {
+                if (DRUMNAMES[drum][0] === args[0]) {
+                    drumname = DRUMNAMES[drum][1];
+                } else if (DRUMNAMES[drum][1] === args[0]) {
+                    drumname = args[0];
+                }
+            }
+
+            that.overrides[turtle]['drum'] = drumname;
+            break;
         case 'setdrum':
             var drumname = 'kick';
             for (var drum in DRUMNAMES) {
@@ -5971,7 +5986,11 @@ function Logo () {
                     if (!that.suppressOutput[turtle] && duration > 0) {
                         if (_THIS_IS_MUSIC_BLOCKS_ && !forceSilence) {
                             for (var i = 0; i < drums.length; i++) {
-                                if (that.drumStyle[turtle].length > 0) {
+                                if ('drum' in that.overrides[turtle]) {
+                                    console.log(that.overrides[turtle]['drum']);
+                                    that.synth.trigger(['C2'], beatValue, that.overrides[turtle]['drum'], null, null);
+                                    delete that.overrides[turtle]['drum'];
+                                } else if (that.drumStyle[turtle].length > 0) {
                                     that.synth.trigger(['C2'], beatValue, last(that.drumStyle[turtle]), null, null);
                                 } else {
                                     that.synth.trigger(['C2'], beatValue, drums[i], null, null);

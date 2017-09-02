@@ -1464,6 +1464,14 @@ function initBasicProtoBlocks(palettes, blocks) {
     intervalBlock.defaults.push(5);
 
     // DRUM PALETTE
+    var overrideDrumBlock = new ProtoBlock('overridedrum');
+    overrideDrumBlock.palette = palettes.dict['drum'];
+    blocks.protoBlockDict['overridedrum'] = overrideDrumBlock;
+    overrideDrumBlock.staticLabels.push(_('override drum'));
+    overrideDrumBlock.adjustWidthToLabel();
+    overrideDrumBlock.oneArgBlock();
+    overrideDrumBlock.dockTypes[1] = 'anyin';
+
     var drumnameBlock = new ProtoBlock('drumname');
     drumnameBlock.palette = palettes.dict['drum'];
     blocks.protoBlockDict['drumname'] = drumnameBlock;
@@ -2883,7 +2891,7 @@ function initBasicProtoBlocks(palettes, blocks) {
     stopTurtleBlock.adjustWidthToLabel();
     stopTurtleBlock.oneArgBlock();
     stopTurtleBlock.dockTypes[1] = 'anyin';
-    stopTurtleBlock.defaults.push('0');
+    stopTurtleBlock.defaults.push('Mozart');
 
     var startTurtleBlock = new ProtoBlock('startTurtle');
     startTurtleBlock.palette = palettes.dict['mice'];
@@ -2892,7 +2900,7 @@ function initBasicProtoBlocks(palettes, blocks) {
     startTurtleBlock.adjustWidthToLabel();
     startTurtleBlock.oneArgBlock();
     startTurtleBlock.dockTypes[1] = 'anyin';
-    startTurtleBlock.defaults.push('0');
+    startTurtleBlock.defaults.push('Mozart');
 
     var turtlecolorBlock = new ProtoBlock('turtlecolor');
     turtlecolorBlock.palette = palettes.dict['mice'];

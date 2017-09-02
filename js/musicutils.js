@@ -1633,6 +1633,11 @@ function Synth() {
     };
 
     this.loadSynth = function (sourceName) {
+        if (sourceName == null) {
+            console.log('cannot loadSynth null sourceName');
+            return;
+        }
+
         if (instruments[sourceName] == null) {
             this.createSynth(sourceName, sourceName, null);
         }
